@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Ilie Mardari](https://up.htmlacademy.ru/react/14/user/2385367).
-* Наставник: `Дмитрий Свиридов`.
+* Наставник: [Дмитрий Свиридов](https://htmlacademy.ru/profile/slamach).
 
 ---
 
