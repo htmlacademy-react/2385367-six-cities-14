@@ -1,3 +1,3 @@
-export const enum Settings {
-  offers = 300
-}
+export const Settings = {
+  offers: 300,
+} as const;
