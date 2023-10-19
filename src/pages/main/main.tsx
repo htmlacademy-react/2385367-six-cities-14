@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import OfferCard from '../../components/offer-card/offer-card.tsx';
 
  type MainProps = {
@@ -7,6 +8,9 @@ import OfferCard from '../../components/offer-card/offer-card.tsx';
 function Main({ offers }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>{ '6 cities - Main Page' }</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
