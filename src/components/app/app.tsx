@@ -8,30 +8,37 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import Offer from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../../pages/main/main';
+import { Offers } from '../../types/offer';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 
  type AppProps = {
-   offers: number;
+   offersCount: number;
+   offers: Offers;
  }
 
-function App({ offers }: AppProps): JSX.Element {
+function App({ offersCount, offers }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             index
-            element={ <Main offers={ offers } /> }
+            element={
+              <Main
+                offersCount = { offersCount }
+                offers={ offers }
+              />
+            }
           />
           <Route
             path={ AppRoute.Favorites }
             element={
               <PrivateRoute
-                authorizationStatus={ AuthorizationStatus.NoAuth }
+                authorizationStatus={ AuthorizationStatus.Auth }
                 redirectTo={ AppRoute.Login }
               >
-                <Favorites />
+                <Favorites offers={ offers } />
               </PrivateRoute>
             }
           />
@@ -47,8 +54,8 @@ function App({ offers }: AppProps): JSX.Element {
             }
           />
           <Route
-            path={ AppRoute.Offer }
-            element={ <Offer /> }
+            path={`${AppRoute.Offer }:id`}
+            element={ <Offer offers={ offers }/> }
           />
           <Route
             path='*'

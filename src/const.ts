@@ -1,12 +1,12 @@
 export const Settings = {
-  offers: 300,
+  offersCount: 300,
 } as const;
 
 export const enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/:id'
+  Offer = '/offer/'
 }
 
 export const enum AuthorizationStatus {
