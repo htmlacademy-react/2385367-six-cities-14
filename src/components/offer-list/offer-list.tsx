@@ -7,7 +7,7 @@ import { Offers } from '../../types/offer';
  }
 
 function OfferList({offers}: OfferListProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [activeCard, setActiveCard] = useState('');
 
   const handleCardMouseEnter = (id: string) => {
@@ -15,7 +15,7 @@ function OfferList({offers}: OfferListProps): JSX.Element {
   };
 
   const handleCardMouseLeave = () => {
-    setActiveCard('');
+    setActiveCard(activeCard);
   };
 
   return (
