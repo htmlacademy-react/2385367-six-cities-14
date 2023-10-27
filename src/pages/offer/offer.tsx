@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import { Offers } from '../../types/offer';
 import FormComment from '../../components/form-comment/form-comment';
+import { AppRoute } from '../../const';
 
  type OfferProps = {
    offers: Offers;
@@ -10,30 +11,30 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
   const params = useParams();
   const offer = offers.find((el) => el.id === params.id);
   if (!offer) {
-    return null;
+    return <Navigate to={ AppRoute.NotFound } />;
   }
   return (
     <div className="page">
       <Helmet>
-        <title>{ '6 cities - Offer' }</title>
+        <title>{ `6 cities - ${ offer.title }` }</title>
       </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link to={ AppRoute.Main } className="header__logo-link">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <Link to={ AppRoute.Favorites } className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                     <span className="header__favorite-count">3</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
@@ -50,9 +51,11 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              { offer.images.map((image)=>
-                // eslint-disable-next-line react/jsx-key
-                (<div className="offer__image-wrapper"><img className="offer__image" src={ image } alt="Photo studio" /></div>))}
+              { offer.images.slice(0, 6).map((image)=> (
+                <div key={ image } className="offer__image-wrapper">
+                  <img className="offer__image" src={ image } alt={ offer.title } />
+                </div>
+              ))}
             </div>
           </div>
           <div className="offer__container container">
@@ -98,8 +101,7 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
                   {offer.goods.map((good) =>
-                    // eslint-disable-next-line react/jsx-key
-                    <li className="offer__inside-item">{ good }</li>)}
+                    <li key={ good } className="offer__inside-item">{ good }</li>)}
                 </ul>
               </div>
               <div className="offer__host">
@@ -153,9 +155,9 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
             <div className="near-places__list places__list">
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
+                  <Link to={ AppRoute.NotFound }>
                     <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
-                  </a>
+                  </Link>
                 </div>
                 <div className="place-card__info">
                   <div className="place-card__price-wrapper">
@@ -177,7 +179,7 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Wood and stone place</a>
+                    <Link to={ AppRoute.NotFound }>Wood and stone place</Link>
                   </h2>
                   <p className="place-card__type">Room</p>
                 </div>
@@ -185,9 +187,9 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
 
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
+                  <Link to={ AppRoute.NotFound }>
                     <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image" />
-                  </a>
+                  </Link>
                 </div>
                 <div className="place-card__info">
                   <div className="place-card__price-wrapper">
@@ -209,7 +211,7 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Canal View Prinsengracht</a>
+                    <Link to={ AppRoute.NotFound }>Canal View Prinsengracht</Link>
                   </h2>
                   <p className="place-card__type">Apartment</p>
                 </div>
@@ -220,9 +222,9 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
                   <span>Premium</span>
                 </div>
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
+                  <Link to={ AppRoute.NotFound }>
                     <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image" />
-                  </a>
+                  </Link>
                 </div>
                 <div className="place-card__info">
                   <div className="place-card__price-wrapper">
@@ -244,7 +246,7 @@ function Offer({ offers }: OfferProps): JSX.Element | null {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Nice, cozy, warm big bed apartment</a>
+                    <Link to={ AppRoute.NotFound }>Nice, cozy, warm big bed apartment</Link>
                   </h2>
                   <p className="place-card__type">Apartment</p>
                 </div>
