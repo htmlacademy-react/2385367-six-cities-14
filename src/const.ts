@@ -1,11 +1,9 @@
-export const Settings = {
-  offers: 300,
-} as const;
-
 export const enum AppRoute {
+  Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/'
+  Offer = '/offer/',
+  NotFound = '*'
 }
 
 export const enum AuthorizationStatus {

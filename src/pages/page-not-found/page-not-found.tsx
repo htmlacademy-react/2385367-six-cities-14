@@ -1,16 +1,24 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { Helmet } from 'react-helmet-async';
+import styles from './page-not-found.module.css';
 
 function PageNotFound(): JSX.Element {
   return (
-    <>
-      <h1>404 Not Found</h1>
-      <Link to='/'>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-        <p className='w3-panel w3-pale-yellow w3-topbar w3-bottombar w3-border-yellow'>
-          <b>Страница не найдена. <br/><em style= {{ color: 'red' }}>Нажмите</em> чтобы перейти на главную.</b>
-        </p>
-      </Link>
-    </>
+    <div className={ `page ${ styles.pageNotFound }` }>
+      <Helmet>
+        <title>{ '6 cities - Not Found' }</title>
+      </Helmet>
+      <h1 className={ styles.title }>404 Not Found</h1>
+      <p className={ styles.text }>
+        Страница не найдена.
+        <br/>
+        <Link to={ AppRoute.Main } className={ styles.link }>
+          Нажмите
+        </Link>
+        &nbsp;чтобы перейти на главную.
+      </p>
+    </div>
   );
 }
 
