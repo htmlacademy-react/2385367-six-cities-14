@@ -13,11 +13,10 @@ import { Offers } from '../../types/offer';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
  type AppProps = {
-   offersCount: number;
    offers: Offers;
  }
 
-function App({ offersCount, offers }: AppProps): JSX.Element {
+function App({ offers }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -26,7 +25,6 @@ function App({ offersCount, offers }: AppProps): JSX.Element {
             index
             element={
               <Main
-                offersCount = { offersCount }
                 offers={ offers }
               />
             }

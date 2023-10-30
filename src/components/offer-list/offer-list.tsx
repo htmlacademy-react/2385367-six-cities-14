@@ -8,14 +8,14 @@ import { Offers } from '../../types/offer';
 
 function OfferList({offers}: OfferListProps): JSX.Element {
 
-  const [activeCard, setActiveCard] = useState('');
+  const [activeCard, setActiveCard] = useState<string | null>(null);
 
-  const handleCardMouseEnter = (id: string) => {
+  const handleCardMouseEnter = (id: typeof activeCard) => {
     setActiveCard(id);
   };
 
   const handleCardMouseLeave = () => {
-    setActiveCard(activeCard);
+    setActiveCard(null);
   };
 
   return (
@@ -24,8 +24,8 @@ function OfferList({offers}: OfferListProps): JSX.Element {
         <OfferCard
           key={ offer.id }
           { ...offer }
-          handleCardMouseEnter={ () => handleCardMouseEnter(offer.id) }
-          handleCardMouseLeave={ () => handleCardMouseLeave() }
+          onCardMouseEnter={ () => handleCardMouseEnter(offer.id) }
+          onCardMouseLeave={ handleCardMouseLeave }
         />)
       )}
     </div>
