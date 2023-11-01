@@ -1,21 +1,15 @@
-import { useState } from 'react';
 import OfferCard from '../offer-card/offer-card';
 import { Offers } from '../../types/offer';
 
  type OfferListProps = {
    offers: Offers;
+   onListItemHover: (id: string) => void;
  }
 
-function OfferList({offers}: OfferListProps): JSX.Element {
 
-  const [activeCard, setActiveCard] = useState<string | null>(null);
-
-  const handleCardMouseEnter = (id: typeof activeCard) => {
-    setActiveCard(id);
-  };
-
-  const handleCardMouseLeave = () => {
-    setActiveCard(null);
+function OfferList({ offers, onListItemHover }: OfferListProps): JSX.Element {
+  const handleCardHover = (id: string) => {
+    onListItemHover(id);
   };
 
   return (
@@ -24,8 +18,7 @@ function OfferList({offers}: OfferListProps): JSX.Element {
         <OfferCard
           key={ offer.id }
           { ...offer }
-          onCardMouseEnter={ () => handleCardMouseEnter(offer.id) }
-          onCardMouseLeave={ handleCardMouseLeave }
+          onCardHover={ () => handleCardHover(offer.id) }
         />)
       )}
     </div>

@@ -7,8 +7,8 @@ export const offers: Offers = [
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 52.37454,
-        'longitude': 4.897976,
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
         'zoom': 13
       }
     },
@@ -51,8 +51,8 @@ export const offers: Offers = [
     },
     'description': 'Design interior in most sympathetic area! Complitely renovated, well-equipped, cosy studio in idyllic, over 100 years old wooden house. Calm street, fast connection to center and airport.',
     'location': {
-      'latitude': 52.361540000000005,
-      'longitude': 4.883976,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     }
   },
@@ -60,10 +60,10 @@ export const offers: Offers = [
     'id': 'f2fc5713-7498-4bc8-9789-32962f8472af',
 
     'city': {
-      'name': 'Hamburg',
+      'name': 'Amsterdam',
       'location': {
-        'latitude': 53.550341,
-        'longitude': 10.000654,
+        'latitude': 52.3609553943508,
+        'longitude': 4.85309666406198,
         'zoom': 13
       }
     },
@@ -109,8 +109,8 @@ export const offers: Offers = [
     },
     'description': 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
     'location': {
-      'latitude': 53.570341000000006,
-      'longitude': 9.975654,
+      'latitude': 52.3609553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     }
   },
@@ -118,10 +118,10 @@ export const offers: Offers = [
     'id': '260d8580-89a7-4372-99e6-0f581fad0567',
 
     'city': {
-      'name': 'Dusseldorf',
+      'name': 'Amsterdam',
       'location': {
-        'latitude': 51.225402,
-        'longitude': 6.776314,
+        'latitude': 52.3909553943508,
+        'longitude': 4.929309666406198,
         'zoom': 13
       }
     },
@@ -164,8 +164,8 @@ export const offers: Offers = [
     },
     'description': 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
     'location': {
-      'latitude': 51.205402,
-      'longitude': 6.7613140000000005,
+      'latitude': 52.3909553943508,
+      'longitude': 4.929309666406198,
       'zoom': 16
     }
   },
@@ -173,10 +173,10 @@ export const offers: Offers = [
     'id': 'f0b5983a-d2e1-4599-897c-fd885ff44d66',
 
     'city': {
-      'name': 'Cologne',
+      'name': 'Amsterdam',
       'location': {
-        'latitude': 50.938361,
-        'longitude': 6.959974,
+        'latitude': 52.3809553943508,
+        'longitude': 4.939309666406198,
         'zoom': 13
       }
     },
@@ -222,8 +222,8 @@ export const offers: Offers = [
     },
     'description': 'Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.',
     'location': {
-      'latitude': 50.932361,
-      'longitude': 6.937974,
+      'latitude': 52.3809553943508,
+      'longitude': 4.939309666406198,
       'zoom': 16
     }
   },

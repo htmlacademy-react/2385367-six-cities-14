@@ -8,15 +8,16 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import Offer from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../../pages/main/main';
-import { Offers } from '../../types/offer';
+import { Offers, City } from '../../types/offer';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 
  type AppProps = {
    offers: Offers;
+   city: City;
  }
 
-function App({ offers }: AppProps): JSX.Element {
+function App({ offers, city }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -26,6 +27,7 @@ function App({ offers }: AppProps): JSX.Element {
             element={
               <Main
                 offers={ offers }
+                city = { city }
               />
             }
           />
