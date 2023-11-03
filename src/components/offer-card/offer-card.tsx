@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
  type OfferCardProps = Offer & {
-   onCardMouseEnter: () => void;
-   onCardMouseLeave: () => void;
+  onCardMouseEnter: () => void;
+  onCardMouseLeave: () => void;
  };
 
 function OfferCard(props: OfferCardProps): JSX.Element {

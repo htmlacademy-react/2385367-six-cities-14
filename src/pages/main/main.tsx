@@ -1,14 +1,30 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Offers } from '../../types/offer.ts';
+import { Offers, City } from '../../types/offer.ts';
 import { AppRoute } from '../../const.ts';
 import OfferList from '../../components/offer-list/offer-list.tsx';
+import Map from '../../components/map/map.tsx';
 
  type MainProps = {
    offers: Offers;
+   city: City;
  }
 
-function Main({ offers }: MainProps): JSX.Element {
+function Main({ offers, city }: MainProps): JSX.Element {
+
+  const [selectedPoint, setSelectedPoint] = useState<number | null>(
+    null
+  );
+
+  const handleItemMouseEnter = (id: typeof selectedPoint) => {
+    setSelectedPoint(id);
+  };
+
+  const handleItemMouseLeave = () => {
+    setSelectedPoint(null);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -100,10 +116,18 @@ function Main({ offers }: MainProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers={ offers }/>
+              <OfferList
+                offers={ offers }
+                onItemMouseEnter={ handleItemMouseEnter }
+                onItemMouseLeave={ handleItemMouseLeave }
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map
+                city={ city }
+                points={ offers }
+                selectedPoint={ selectedPoint }
+              />
             </div>
           </div>
         </div>

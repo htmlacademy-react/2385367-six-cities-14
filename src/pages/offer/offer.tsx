@@ -9,7 +9,8 @@ import { AppRoute } from '../../const';
  }
 function Offer({ offers }: OfferProps): JSX.Element | null {
   const params = useParams();
-  const offer = offers.find((el) => el.id === params.id);
+  const offer = offers.find((el) => el.id.toPrecision() === params.id);
+
   if (!offer) {
     return <Navigate to={ AppRoute.NotFound } />;
   }
