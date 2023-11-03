@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Offers, Offer, City } from '../../types/offer.ts';
+import { Offers, City } from '../../types/offer.ts';
 import { AppRoute } from '../../const.ts';
 import OfferList from '../../components/offer-list/offer-list.tsx';
 import Map from '../../components/map/map.tsx';
@@ -13,14 +13,16 @@ import Map from '../../components/map/map.tsx';
 
 function Main({ offers, city }: MainProps): JSX.Element {
 
-  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
-    undefined
+  const [selectedPoint, setSelectedPoint] = useState<number | null>(
+    null
   );
 
-  const handleListItemHover = (id: string) => {
-    const currentPoint = offers.find((item) => item.id === id);
+  const handleItemMouseEnter = (id: typeof selectedPoint) => {
+    setSelectedPoint(id);
+  };
 
-    setSelectedPoint(currentPoint);
+  const handleItemMouseLeave = () => {
+    setSelectedPoint(null);
   };
 
   return (
@@ -116,7 +118,8 @@ function Main({ offers, city }: MainProps): JSX.Element {
               </form>
               <OfferList
                 offers={ offers }
-                onListItemHover={ handleListItemHover }
+                onItemMouseEnter={ handleItemMouseEnter }
+                onItemMouseLeave={ handleItemMouseLeave }
               />
             </section>
             <div className="cities__right-section">

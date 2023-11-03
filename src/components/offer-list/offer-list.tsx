@@ -3,14 +3,12 @@ import { Offers } from '../../types/offer';
 
  type OfferListProps = {
    offers: Offers;
-   onListItemHover: (id: string) => void;
+   onItemMouseEnter: (id: number) => void;
+   onItemMouseLeave: () => void;
  }
 
 
-function OfferList({ offers, onListItemHover }: OfferListProps): JSX.Element {
-  const handleCardHover = (id: string) => {
-    onListItemHover(id);
-  };
+function OfferList({ offers, onItemMouseEnter, onItemMouseLeave }: OfferListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -18,7 +16,8 @@ function OfferList({ offers, onListItemHover }: OfferListProps): JSX.Element {
         <OfferCard
           key={ offer.id }
           { ...offer }
-          onCardHover={ () => handleCardHover(offer.id) }
+          onCardMouseEnter={ () => onItemMouseEnter(offer.id) }
+          onCardMouseLeave={ onItemMouseLeave }
         />)
       )}
     </div>

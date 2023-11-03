@@ -2,7 +2,7 @@ import { Offers } from '../types/offer';
 
 export const offers: Offers = [
   {
-    'id': 'f3555aeb-7d5f-498d-89d6-358ebe496e94',
+    'id': 1,
 
     'city': {
       'name': 'Amsterdam',
@@ -57,7 +57,7 @@ export const offers: Offers = [
     }
   },
   {
-    'id': 'f2fc5713-7498-4bc8-9789-32962f8472af',
+    'id': 2,
 
     'city': {
       'name': 'Amsterdam',
@@ -115,7 +115,7 @@ export const offers: Offers = [
     }
   },
   {
-    'id': '260d8580-89a7-4372-99e6-0f581fad0567',
+    'id': 3,
 
     'city': {
       'name': 'Amsterdam',
@@ -170,7 +170,7 @@ export const offers: Offers = [
     }
   },
   {
-    'id': 'f0b5983a-d2e1-4599-897c-fd885ff44d66',
+    'id': 4,
 
     'city': {
       'name': 'Amsterdam',

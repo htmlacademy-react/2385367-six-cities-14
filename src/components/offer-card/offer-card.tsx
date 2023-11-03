@@ -3,16 +3,18 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
  type OfferCardProps = Offer & {
-  onCardHover: () => void;
+  onCardMouseEnter: () => void;
+  onCardMouseLeave: () => void;
  };
 
 function OfferCard(props: OfferCardProps): JSX.Element {
-  const {id, title, type, price, isFavorite, previewImage, isPremium, rating, onCardHover} = props;
+  const {id, title, type, price, isFavorite, previewImage, isPremium, rating, onCardMouseEnter, onCardMouseLeave} = props;
 
   return (
     <article
       className="cities__card place-card"
-      onMouseEnter={ onCardHover }
+      onMouseEnter={ onCardMouseEnter }
+      onMouseLeave={ onCardMouseLeave }
     >
       {isPremium &&
          <div className="place-card__mark">
