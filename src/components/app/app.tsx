@@ -5,19 +5,21 @@ import { HelmetProvider } from 'react-helmet-async';
 import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
-import Offer from '../../pages/offer/offer';
+import OfferPage from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../../pages/main/main';
-import { Offers, City } from '../../types/offer';
+import { Offer, City } from '../../types/offer';
+import { Review } from '../../types/review';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 
  type AppProps = {
-   offers: Offers;
+   offers: Offer[];
    city: City;
+   reviews: Review[];
  }
 
-function App({ offers, city }: AppProps): JSX.Element {
+function App({ offers, city, reviews }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -55,7 +57,13 @@ function App({ offers, city }: AppProps): JSX.Element {
           />
           <Route
             path={`${AppRoute.Offer }:id`}
-            element={ <Offer offers={ offers }/> }
+            element={
+              <OfferPage
+                offers={ offers }
+                city = { city }
+                reviews = { reviews }
+              />
+            }
           />
           <Route
             path={ AppRoute.NotFound }

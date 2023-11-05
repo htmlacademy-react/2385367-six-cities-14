@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Offers, City } from '../../types/offer.ts';
+import { Offer, City } from '../../types/offer.ts';
 import { AppRoute } from '../../const.ts';
 import OfferList from '../../components/offer-list/offer-list.tsx';
 import Map from '../../components/map/map.tsx';
 
  type MainProps = {
-   offers: Offers;
+   offers: Offer[];
    city: City;
  }
 
@@ -16,11 +16,9 @@ function Main({ offers, city }: MainProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<number | null>(
     null
   );
-
   const handleItemMouseEnter = (id: typeof selectedPoint) => {
     setSelectedPoint(id);
   };
-
   const handleItemMouseLeave = () => {
     setSelectedPoint(null);
   };
@@ -118,6 +116,7 @@ function Main({ offers, city }: MainProps): JSX.Element {
               </form>
               <OfferList
                 offers={ offers }
+                type = 'cities'
                 onItemMouseEnter={ handleItemMouseEnter }
                 onItemMouseLeave={ handleItemMouseLeave }
               />

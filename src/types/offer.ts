@@ -32,5 +32,3 @@ export type Location = {
       longitude: number;
       zoom: number;
       };
-
-export type Offers = Offer[];
