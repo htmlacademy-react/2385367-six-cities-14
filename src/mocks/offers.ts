@@ -1,6 +1,6 @@
-import { Offers } from '../types/offer';
+import { Offer } from '../types/offer';
 
-export const offers: Offers = [
+export const offers: Offer[] = [
   {
     'id': 1,
 
@@ -9,7 +9,7 @@ export const offers: Offers = [
       'location': {
         'latitude': 52.3909553943508,
         'longitude': 4.85309666406198,
-        'zoom': 13
+        'zoom': 12
       }
     },
     'previewImage': 'https://14.react.pages.academy/static/offer/14.jpg',
@@ -53,7 +53,7 @@ export const offers: Offers = [
     'location': {
       'latitude': 52.3909553943508,
       'longitude': 4.85309666406198,
-      'zoom': 16
+      'zoom': 12
     }
   },
   {
@@ -64,7 +64,7 @@ export const offers: Offers = [
       'location': {
         'latitude': 52.3609553943508,
         'longitude': 4.85309666406198,
-        'zoom': 13
+        'zoom': 12
       }
     },
     'previewImage': 'https://14.react.pages.academy/static/offer/20.jpg',
@@ -111,7 +111,7 @@ export const offers: Offers = [
     'location': {
       'latitude': 52.3609553943508,
       'longitude': 4.85309666406198,
-      'zoom': 16
+      'zoom': 12
     }
   },
   {
@@ -122,7 +122,7 @@ export const offers: Offers = [
       'location': {
         'latitude': 52.3909553943508,
         'longitude': 4.929309666406198,
-        'zoom': 13
+        'zoom': 12
       }
     },
     'previewImage': 'https://14.react.pages.academy/static/offer/13.jpg',
@@ -166,7 +166,7 @@ export const offers: Offers = [
     'location': {
       'latitude': 52.3909553943508,
       'longitude': 4.929309666406198,
-      'zoom': 16
+      'zoom': 12
     }
   },
   {
@@ -177,7 +177,7 @@ export const offers: Offers = [
       'location': {
         'latitude': 52.3809553943508,
         'longitude': 4.939309666406198,
-        'zoom': 13
+        'zoom': 12
       }
     },
     'previewImage': 'https://14.react.pages.academy/static/offer/3.jpg',
@@ -224,7 +224,11 @@ export const offers: Offers = [
     'location': {
       'latitude': 52.3809553943508,
       'longitude': 4.939309666406198,
-      'zoom': 16
+      'zoom': 12
     }
   },
 ];
+
+const cities = offers.map((item) => item.city);
+
+export const city = cities[0];

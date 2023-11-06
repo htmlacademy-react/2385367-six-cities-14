@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import OfferList from '../../components/offer-list/offer-list';
-import { Offers } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { AppRoute } from '../../const';
 
  type FavoritesProps = {
-   offers: Offers;
+   offers: Offer[];
  }
 
 function Favorites({ offers }: FavoritesProps): JSX.Element {
