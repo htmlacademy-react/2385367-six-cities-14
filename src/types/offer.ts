@@ -22,12 +22,12 @@ export type Offer = {
   type: string;
   }
 
-export type City = {
+type City = {
     location: Location;
     name: string;
     };
 
-export type Location = {
+type Location = {
       latitude: number;
       longitude: number;
       zoom: number;

@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { City, Offer } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { UrlMarker } from '../../const';
 import 'leaflet/dist/leaflet.css';
 import './map.css';
 
 
 type MapProps = {
-  city: City;
+  city: Offer['city'];
   points: Offer[];
   selectedPoint: number | null;
 }
@@ -56,7 +56,7 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
   return (
     <div
       ref={ mapRef }
-      className="map"
+      className="cities__ map map"
     />
   );
 }

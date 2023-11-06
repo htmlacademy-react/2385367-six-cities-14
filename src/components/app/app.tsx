@@ -8,14 +8,14 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import OfferPage from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../../pages/main/main';
-import { Offer, City } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 
  type AppProps = {
    offers: Offer[];
-   city: City;
+   city: Offer['city'];
    reviews: Review[];
  }
 

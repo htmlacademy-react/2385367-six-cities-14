@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Offer, City } from '../../types/offer.ts';
+import { Offer } from '../../types/offer.ts';
 import { AppRoute } from '../../const.ts';
 import OfferList from '../../components/offer-list/offer-list.tsx';
 import Map from '../../components/map/map.tsx';
 
  type MainProps = {
    offers: Offer[];
-   city: City;
+   city: Offer['city'];
  }
 
 function Main({ offers, city }: MainProps): JSX.Element {

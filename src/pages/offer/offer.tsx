@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, Navigate, Link } from 'react-router-dom';
 
-import { Offer, City } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -13,7 +13,7 @@ import { AppRoute } from '../../const';
  type OfferProps = {
    offers: Offer[];
    reviews: Review[];
-   city: City;
+   city: Offer['city'];
  }
 function OfferPage ({ offers, reviews, city }: OfferProps): JSX.Element | null {
   const params = useParams();
