@@ -9,33 +9,38 @@ import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import FormComment from '../../components/form-comment/form-comment';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks';
 
  type OfferProps = {
-   offers: Offer[];
    reviews: Review[];
-   city: Offer['city'];
  }
-function OfferPage ({ offers, reviews, city }: OfferProps): JSX.Element | null {
-  const params = useParams();
-  const offer = offers.find((key) => key.id.toPrecision() === params.id);
+function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
+  const sortOffers = useAppSelector((state) => state.sortOffers);
+  const pageOffers = useAppSelector((state) => state.pageOffers);
 
-  const [selectedPoint, setSelectedPoint] = useState<number | null>(
-    null
+  const city = sortOffers.map((item) => item.city)[0];
+
+  const params = useParams();
+  const pageOffer = pageOffers.find((key) => key.id === params.id);
+
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
+    undefined
   );
-  const handleItemMouseEnter = (id: typeof selectedPoint) => {
-    setSelectedPoint(id);
+  const handleItemMouseEnter = (id: string) => {
+    const currentPoint = sortOffers.find((item) => item.id === id);
+    setSelectedPoint(currentPoint);
   };
   const handleItemMouseLeave = () => {
-    setSelectedPoint(null);
+    setSelectedPoint(undefined);
   };
 
-  if (!offer) {
+  if (!pageOffer) {
     return <Navigate to={ AppRoute.NotFound } />;
   }
   return (
     <div className="page">
       <Helmet>
-        <title>{ `6 cities - ${ offer.title }` }</title>
+        <title>{ `6 cities - ${ pageOffer.title }` }</title>
       </Helmet>
       <header className="header">
         <div className="container">
@@ -70,22 +75,22 @@ function OfferPage ({ offers, reviews, city }: OfferProps): JSX.Element | null {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              { offer.images.slice(0, 6).map((image)=> (
+              { pageOffer.images.slice(0, 6).map((image)=> (
                 <div key={ image } className="offer__image-wrapper">
-                  <img className="offer__image" src={ image } alt={ offer.title } />
+                  <img className="offer__image" src={ image } alt={ pageOffer.title } />
                 </div>
               ))}
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              { offer.isPremium &&
+              { pageOffer.isPremium &&
                  <div className="offer__mark">
                    <span>Premium</span>
                  </div> }
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  { offer.title }
+                  { pageOffer.title }
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -96,44 +101,44 @@ function OfferPage ({ offers, reviews, city }: OfferProps): JSX.Element | null {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${Math.round(offer.rating) * 100 / 5}%` }}></span>
+                  <span style={{ width: `${Math.round(pageOffer.rating) * 100 / 5}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{ offer.rating }</span>
+                <span className="offer__rating-value rating__value">{ pageOffer.rating }</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  { offer.type }
+                  { pageOffer.type }
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  { offer.bedrooms } Bedrooms
+                  { pageOffer.bedrooms } Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max { offer.maxAdults } adults
+                  Max { pageOffer.maxAdults } adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{ offer.price }</b>
+                <b className="offer__price-value">&euro;{ pageOffer.price }</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {offer.goods.map((good) =>
+                  {pageOffer.goods.map((good) =>
                     <li key={ good } className="offer__inside-item">{ good }</li>)}
                 </ul>
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className= {offer.host.isPro ? 'offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper' : 'offer__avatar-wrapper user__avatar-wrapper' }>
-                    <img className="offer__avatar user__avatar" src={ offer.host.avatarUrl } width="74" height="74" alt="Host avatar" />
+                  <div className= {pageOffer.host.isPro ? 'offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper' : 'offer__avatar-wrapper user__avatar-wrapper' }>
+                    <img className="offer__avatar user__avatar" src={ pageOffer.host.avatarUrl } width="74" height="74" alt="Host avatar" />
                   </div>
-                  <span className="offer__user-name">{ offer.host.name }</span>
-                  <span className="offer__user-status">{ offer.host.isPro ? 'Pro' : null }</span>
+                  <span className="offer__user-name">{ pageOffer.host.name }</span>
+                  <span className="offer__user-status">{ pageOffer.host.isPro ? 'Pro' : null }</span>
                 </div>
                 <div className="offer__description">
-                  <p className="offer__text">{ offer.description }</p>
+                  <p className="offer__text">{ pageOffer.description }</p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
@@ -147,7 +152,7 @@ function OfferPage ({ offers, reviews, city }: OfferProps): JSX.Element | null {
           <section className="offer__map map">
             <Map
               city={ city }
-              points={ offers.slice(0, 3) }
+              points={ sortOffers.slice(0, 3) }
               selectedPoint={ selectedPoint }
             />
           </section>
@@ -157,7 +162,7 @@ function OfferPage ({ offers, reviews, city }: OfferProps): JSX.Element | null {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OfferList
               type = 'near'
-              offers={ offers.slice(0, 3) }
+              offers={ sortOffers.slice(0, 3) }
               onItemMouseEnter={ handleItemMouseEnter }
               onItemMouseLeave={ handleItemMouseLeave }
             />

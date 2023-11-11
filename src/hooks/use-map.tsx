@@ -10,10 +10,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: Offer['city'
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
-        center: {
-          lat: city.location.latitude,
-          lng: city.location.longitude
-        },
+        center:[
+          city.location.latitude,
+          city.location.longitude
+        ],
         zoom: city.location.zoom
       });
 
@@ -24,9 +24,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: Offer['city'
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         }
       );
-
       instance.addLayer(layer);
-
       setMap(instance);
       isRenderedRef.current = true;
     }

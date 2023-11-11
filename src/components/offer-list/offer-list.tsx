@@ -5,7 +5,7 @@ import classNames from 'classnames';
  type OfferListProps = {
    type?: 'cities' | 'near';
    offers: Offer[];
-   onItemMouseEnter: (id: number) => void;
+   onItemMouseEnter: (id: string) => void;
    onItemMouseLeave: () => void;
  }
 

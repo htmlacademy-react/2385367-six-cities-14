@@ -8,18 +8,18 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import OfferPage from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../../pages/main/main';
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
 import { Review } from '../../types/review';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 
  type AppProps = {
-   offers: Offer[];
-   city: Offer['city'];
    reviews: Review[];
  }
 
-function App({ offers, city, reviews }: AppProps): JSX.Element {
+function App({ reviews }: AppProps): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -27,10 +27,7 @@ function App({ offers, city, reviews }: AppProps): JSX.Element {
           <Route
             index
             element={
-              <Main
-                offers={ offers }
-                city = { city }
-              />
+              <Main/>
             }
           />
           <Route
@@ -59,8 +56,6 @@ function App({ offers, city, reviews }: AppProps): JSX.Element {
             path={`${AppRoute.Offer }:id`}
             element={
               <OfferPage
-                offers={ offers }
-                city = { city }
                 reviews = { reviews }
               />
             }
