@@ -2,13 +2,11 @@ import { createReducer } from '@reduxjs/toolkit';
 import { changeCity, sortedOffersCity } from './action';
 import { offers } from '../mocks/offers';
 import { pageOffers } from '../mocks/offer-page';
-import { offersNearby } from '../mocks/offers-nearby';
 import { Offer, City, OfferPageType } from '../types/offer';
 
  type InitialState = {
    city: City['name'];
    offers: Offer[];
-   offersNearby: Offer[];
    pageOffers: OfferPageType[];
    sortOffers: Offer[];
  }
@@ -16,7 +14,6 @@ import { Offer, City, OfferPageType } from '../types/offer';
 const initialState: InitialState = {
   city: 'Paris',
   offers,
-  offersNearby,
   pageOffers,
   sortOffers: offers.filter((item) => item.city.name === 'Paris'),
 };
