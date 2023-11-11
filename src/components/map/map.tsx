@@ -1,16 +1,17 @@
 import { useEffect, useRef } from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
 import useMap from '../../hooks/use-map';
 import { Offer } from '../../types/offer';
 import { UrlMarker } from '../../const';
-import 'leaflet/dist/leaflet.css';
-import './map.css';
 
+import './map.css';
 
 type MapProps = {
   city: Offer['city'];
   points: Offer[];
-  selectedPoint: number | null;
+  selectedPoint?: Offer;
 }
 
 const defaultCustomIcon = new Icon({
@@ -25,7 +26,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({city, points, selectedPoint}: MapProps): JSX.Element {
+function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -34,24 +35,33 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
       const markerLayer = layerGroup().addTo(map);
 
       points.forEach((point) => {
-        const marker = new Marker({
-          lat: point.location.latitude,
-          lng: point.location.longitude
-        });
+        const marker = new Marker([
+          point.location.latitude,
+          point.location.longitude
+        ]);
 
         marker
           .setIcon(
-            selectedPoint && point.id === selectedPoint ? currentCustomIcon
+            selectedPoint && point.id === selectedPoint.id ? currentCustomIcon
               : defaultCustomIcon
           )
+          .setOpacity(0.75)
           .addTo(markerLayer);
       });
+
+      map.flyTo(
+        [
+          city.location.latitude,
+          city.location.longitude,
+        ],
+        city.location.zoom
+      );
 
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, city, selectedPoint]);
 
   return (
     <div

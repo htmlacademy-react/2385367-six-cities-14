@@ -1,28 +1,17 @@
 export type Offer = {
-  id: number;
-  bedrooms: number;
+  id: string;
   city: City;
-  description: string;
-  goods: string[];
-  host: {
-  avatarUrl: string;
-  id: number;
-  isPro: boolean;
-  name: string;
-  };
-  images: string[];
   isFavorite: boolean;
   isPremium: boolean;
   location: Location;
-  maxAdults: number;
-  previewImage: string;
+  previewImage?: string;
   price: number;
   rating: number;
   title: string;
   type: string;
   }
 
-type City = {
+export type City = {
     location: Location;
     name: string;
     };
@@ -32,3 +21,18 @@ type Location = {
       longitude: number;
       zoom: number;
       };
+
+type OfferDuplicate = Omit <Offer, 'previewImage'>;
+
+export type OfferPageType = OfferDuplicate & {
+        bedrooms: number;
+        description: string;
+        goods: string[];
+        host: {
+        avatarUrl: string;
+        isPro: boolean;
+        name: string;
+        };
+        images: string[];
+        maxAdults: number;
+        };
