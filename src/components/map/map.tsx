@@ -42,7 +42,7 @@ function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint && point.id === selectedPoint.id ? currentCustomIcon
+            selectedPoint !== undefined && point.id === selectedPoint.id ? currentCustomIcon
               : defaultCustomIcon
           )
           .setOpacity(0.75)

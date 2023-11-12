@@ -20,8 +20,14 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
 
   const city = sortOffers.map((item) => item.city)[0];
 
-  const params = useParams();
-  const pageOffer = pageOffers.find((key) => key.id === params.id);
+  const {id: offerId} = useParams();
+  const pageOffer = pageOffers.find(({id}) => id === offerId);
+
+  const randomNearbyOffers = sortOffers.slice(0, 3);
+  const randomNearbyMap = sortOffers.slice(0, 4);
+  if (pageOffer) {
+    randomNearbyMap.push(pageOffer);
+  }
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
@@ -152,7 +158,7 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
           <section className="offer__map map">
             <Map
               city={ city }
-              points={ sortOffers.slice(0, 3) }
+              points={ randomNearbyMap }
               selectedPoint={ selectedPoint }
             />
           </section>
@@ -162,7 +168,7 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OfferList
               type = 'near'
-              offers={ sortOffers.slice(0, 3) }
+              offers={ randomNearbyOffers }
               onItemMouseEnter={ handleItemMouseEnter }
               onItemMouseLeave={ handleItemMouseLeave }
             />

@@ -13,8 +13,8 @@ export const enum AuthorizationStatus {
 }
 
 export const UrlMarker = {
-  DefaultMarker : 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-  CurrentMarker : 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg'
+  DefaultMarker : 'public/img/pin.svg',
+  CurrentMarker : 'public/img/pin-active.svg'
 } as const;
 
 export const months = [
@@ -22,7 +22,7 @@ export const months = [
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ] as const;
 
-export const CitiesList = [
+export const citiesList = [
   'Paris',
   'Cologne',
   'Brussels',
