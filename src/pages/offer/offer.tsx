@@ -23,8 +23,8 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
   const {id: offerId} = useParams();
   const pageOffer = pageOffers.find(({id}) => id === offerId);
 
-  const randomNearbyOffers = sortOffers.slice(0, 3);
-  const randomNearbyMap = sortOffers.slice(0, 4);
+  const randomNearbyOffers = sortOffers.slice(1, 4);
+  const randomNearbyMap = sortOffers.slice(1, 4);
   if (pageOffer) {
     randomNearbyMap.push(pageOffer);
   }
@@ -33,7 +33,7 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
     undefined
   );
   const handleItemMouseEnter = (id: string) => {
-    const currentPoint = sortOffers.find((item) => item.id === id);
+    const currentPoint = randomNearbyOffers.find((item) => item.id === id);
     setSelectedPoint(currentPoint);
   };
   const handleItemMouseLeave = () => {
@@ -160,6 +160,7 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
               city={ city }
               points={ randomNearbyMap }
               selectedPoint={ selectedPoint }
+              pageOffer = { pageOffer }
             />
           </section>
         </section>

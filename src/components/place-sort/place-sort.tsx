@@ -3,28 +3,18 @@ import { useAppDispatch } from '../../hooks';
 import classNames from 'classnames';
 import { filterOffer } from '../../store/action';
 
-const filtersList = [
-  {
-    name: 'Popular',
-    type: 'popular'
-  },
-  {
-    name: 'Price: low to high',
-    type: 'high'
-  },
-  {
-    name: 'Price: high to low',
-    type: 'low'
-  },
-  {
-    name: 'Top rated first',
-    type: 'top'
-  },
-];
+type FiltersListType = Record<string, string>;
+
+const filtersList: FiltersListType = {
+  'popular' : 'Popular',
+  'high' :'Price: low to high',
+  'low' : 'Price: high to low',
+  'top' : 'Top rated first',
+};
 
 function PlaceSort() {
   const [active, setActive] = useState(false);
-  const [currentFilter, setCurrenFilter] = useState('Popular');
+  const [currentFilter, setCurrenFilter] = useState(filtersList.popular);
 
   const dispatch = useAppDispatch();
 
@@ -48,22 +38,22 @@ function PlaceSort() {
         </svg>
       </span>
       <ul className={placeSortClass}>
-        {filtersList.map((item, i) => {
-          const keyValue = `${item.name}-${i}`;
+        {Object.keys(filtersList).map((key) => {
+          const keyValue = `${filtersList[key]}`;
           return (
             <li
               key={keyValue}
               className={classNames({
                 'places__option': true,
-                'places__option--active': currentFilter === item.name
+                'places__option--active': currentFilter === filtersList[key]
               })}
               tabIndex={0}
               onClick={() => {
-                setCurrenFilter(item.name);
+                setCurrenFilter(filtersList[key]);
                 setActive((prev) => !prev);
-                dispatch(filterOffer(item.type));
+                dispatch(filterOffer(key));
               }}
-            >{item.name}
+            >{filtersList[key]}
             </li>
           );
         })}

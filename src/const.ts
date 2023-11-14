@@ -13,8 +13,8 @@ export const enum AuthorizationStatus {
 }
 
 export const UrlMarker = {
-  DefaultMarker : 'public/img/pin.svg',
-  CurrentMarker : 'public/img/pin-active.svg'
+  DefaultMarker : '/img/pin.svg',
+  CurrentMarker : '/img/pin-active.svg'
 } as const;
 
 export const months = [
@@ -30,3 +30,10 @@ export const citiesList = [
   'Hamburg',
   'Dusseldorf'
 ];
+
+export enum FilterType {
+   Popular = 'popular',
+   High = 'high',
+   Low = 'low',
+   Top = 'top'
+}

@@ -3,6 +3,7 @@ import { changeCity, sortedOffersCity, filterOffer } from './action';
 import { offers } from '../mocks/offers';
 import { pageOffers } from '../mocks/offer-page';
 import { Offer, City, OfferPageType } from '../types/offer';
+import { FilterType } from '../const';
 
  type InitialState = {
    city: City['name'];
@@ -30,13 +31,13 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(filterOffer, (state, action) => {
       switch (action.payload) {
-        case 'high':
+        case FilterType.High:
           state.sortOffers.sort((a, b) => a.price - b.price);
           break;
-        case 'low':
+        case FilterType.Low:
           state.sortOffers.sort((a, b) => b.price - a.price);
           break;
-        case 'top':
+        case FilterType.Top:
           state.sortOffers.sort((a, b) => b.rating - a.rating);
           break;
         default:
