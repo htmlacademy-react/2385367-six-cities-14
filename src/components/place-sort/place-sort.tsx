@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import classNames from 'classnames';
-import { filterOffer } from '../../store/action';
+import { filterOffersByType } from '../../store/action';
 
 type FiltersListType = Record<string, string>;
 
@@ -51,7 +51,7 @@ function PlaceSort() {
               onClick={() => {
                 setCurrenFilter(filtersList[key]);
                 setActive((prev) => !prev);
-                dispatch(filterOffer(key));
+                dispatch(filterOffersByType(key));
               }}
             >{filtersList[key]}
             </li>

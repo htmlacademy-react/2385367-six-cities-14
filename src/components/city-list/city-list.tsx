@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import classNames from 'classnames';
-import { changeCity, sortedOffersCity } from '../../store/action';
+import { changeCity, sortOffersByCityName } from '../../store/action';
 
  type CityListProps = {
    cities: string[];
@@ -27,7 +27,7 @@ function CityList({ cities, currentCity }: CityListProps): JSX.Element {
               onClick={(evt) => {
                 evt.preventDefault();
                 dispatch(changeCity(city));
-                dispatch(sortedOffersCity(city));
+                dispatch(sortOffersByCityName(city));
               }}
             >
               <span>{city}</span>

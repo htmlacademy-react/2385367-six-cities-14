@@ -10,21 +10,22 @@ import OfferList from '../../components/offer-list/offer-list';
 import FormComment from '../../components/form-comment/form-comment';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getCity } from '../../util';
 
  type OfferProps = {
    reviews: Review[];
  }
 function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
-  const sortOffers = useAppSelector((state) => state.sortOffers);
+  const sortOffersByCityName = useAppSelector((state) => state.sortOffersByCityName);
   const pageOffers = useAppSelector((state) => state.pageOffers);
 
-  const city = sortOffers.map((item) => item.city)[0];
+  const city = getCity(sortOffersByCityName);
 
   const {id: offerId} = useParams();
   const pageOffer = pageOffers.find(({id}) => id === offerId);
 
-  const randomNearbyOffers = sortOffers.slice(1, 4);
-  const randomNearbyMap = sortOffers.slice(1, 4);
+  const randomNearbyOffers = sortOffersByCityName.slice(1, 4);
+  const randomNearbyMap = sortOffersByCityName.slice(1, 4);
   if (pageOffer) {
     randomNearbyMap.push(pageOffer);
   }

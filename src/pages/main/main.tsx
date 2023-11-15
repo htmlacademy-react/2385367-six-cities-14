@@ -9,19 +9,20 @@ import Map from '../../components/map/map.tsx';
 import CityList from '../../components/city-list/city-list.tsx';
 import PlaceSort from '../../components/place-sort/place-sort.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
+import { getCity } from '../../util.ts';
 
 function Main(): JSX.Element {
 
   const activeCity = useAppSelector((state) => state.city);
-  const sortOffers = useAppSelector((state) => state.sortOffers);
+  const sortOffersByCityName = useAppSelector((state) => state.sortOffersByCityName);
 
-  const city = sortOffers.map((item) => item.city)[0];
+  const city = getCity(sortOffersByCityName);
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
   const handleItemMouseEnter = (id: string) => {
-    const currentPoint = sortOffers.find((item) => item.id === id);
+    const currentPoint = sortOffersByCityName.find((item) => item.id === id);
     setSelectedPoint(currentPoint);
   };
   const handleItemMouseLeave = () => {
@@ -75,10 +76,10 @@ function Main(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{ sortOffers.length } places to stay in { city.name }</b>
+              <b className="places__found">{ sortOffersByCityName.length } places to stay in { city.name }</b>
               <PlaceSort />
               <OfferList
-                offers={ sortOffers }
+                offers={ sortOffersByCityName }
                 type = 'cities'
                 onItemMouseEnter={ handleItemMouseEnter }
                 onItemMouseLeave={ handleItemMouseLeave }
@@ -87,7 +88,7 @@ function Main(): JSX.Element {
             <div className="cities__right-section">
               <Map
                 city={ city }
-                points={ sortOffers }
+                points={ sortOffersByCityName }
                 selectedPoint={ selectedPoint }
               />
             </div>
