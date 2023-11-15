@@ -10,24 +10,31 @@ import OfferList from '../../components/offer-list/offer-list';
 import FormComment from '../../components/form-comment/form-comment';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getCity } from '../../util';
 
  type OfferProps = {
    reviews: Review[];
  }
 function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
-  const sortOffers = useAppSelector((state) => state.sortOffers);
+  const sortOffersByCityName = useAppSelector((state) => state.sortOffersByCityName);
   const pageOffers = useAppSelector((state) => state.pageOffers);
 
-  const city = sortOffers.map((item) => item.city)[0];
+  const city = getCity(sortOffersByCityName);
 
-  const params = useParams();
-  const pageOffer = pageOffers.find((key) => key.id === params.id);
+  const {id: offerId} = useParams();
+  const pageOffer = pageOffers.find(({id}) => id === offerId);
+
+  const randomNearbyOffers = sortOffersByCityName.slice(1, 4);
+  const randomNearbyMap = sortOffersByCityName.slice(1, 4);
+  if (pageOffer) {
+    randomNearbyMap.push(pageOffer);
+  }
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
   const handleItemMouseEnter = (id: string) => {
-    const currentPoint = sortOffers.find((item) => item.id === id);
+    const currentPoint = randomNearbyOffers.find((item) => item.id === id);
     setSelectedPoint(currentPoint);
   };
   const handleItemMouseLeave = () => {
@@ -152,8 +159,9 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
           <section className="offer__map map">
             <Map
               city={ city }
-              points={ sortOffers.slice(0, 3) }
+              points={ randomNearbyMap }
               selectedPoint={ selectedPoint }
+              pageOffer = { pageOffer }
             />
           </section>
         </section>
@@ -162,7 +170,7 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OfferList
               type = 'near'
-              offers={ sortOffers.slice(0, 3) }
+              offers={ randomNearbyOffers }
               onItemMouseEnter={ handleItemMouseEnter }
               onItemMouseLeave={ handleItemMouseLeave }
             />
