@@ -1,31 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, Navigate, Link } from 'react-router-dom';
 
-import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
+import { Offer } from '../../types/offer';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import FormComment from '../../components/form-comment/form-comment';
+import Loader from '../../components/loader/loader';
 import { AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks';
-import { getCity } from '../../util';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { fetchOfferAction } from '../../store/api-action';
 
  type OfferProps = {
    reviews: Review[];
  }
 function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
-  const sortOffersByCityName = useAppSelector((state) => state.sortOffersByCityName);
-  const pageOffers = useAppSelector((state) => state.pageOffers);
-
-  const city = getCity(sortOffersByCityName);
 
   const {id: offerId} = useParams();
-  const pageOffer = pageOffers.find(({id}) => id === offerId);
 
-  const randomNearbyOffers = sortOffersByCityName.slice(1, 4);
-  const randomNearbyMap = sortOffersByCityName.slice(1, 4);
+  const isOfferDataLoading = useAppSelector((state) => state.isOfferDataLoading);
+  const pageOffer = useAppSelector((state) => state.currentOffer);
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+
+  const randomNearbyOffers = offersNearby.slice(1, 4);
+  const randomNearbyMap = offersNearby.slice(1, 4);
   if (pageOffer) {
     randomNearbyMap.push(pageOffer);
   }
@@ -41,9 +41,26 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
     setSelectedPoint(undefined);
   };
 
-  if (!pageOffer) {
-    return <Navigate to={ AppRoute.NotFound } />;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (offerId) {
+      dispatch(fetchOfferAction(offerId));
+    }
+  }, [dispatch, offerId]);
+
+  if (isOfferDataLoading) {
+    return (
+      <Loader />
+    );
   }
+
+  if (!pageOffer) {
+    return (
+      <Navigate to={ AppRoute.NotFound } />
+    );
+  }
+
   return (
     <div className="page">
       <Helmet>
@@ -158,7 +175,7 @@ function OfferPage ({ reviews }: OfferProps): JSX.Element | null {
           </div>
           <section className="offer__map map">
             <Map
-              city={ city }
+              city={ pageOffer.city }
               points={ randomNearbyMap }
               selectedPoint={ selectedPoint }
               pageOffer = { pageOffer }

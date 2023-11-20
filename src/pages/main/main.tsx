@@ -3,20 +3,17 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
 import { Offer } from '../../types/offer.ts';
-import { AppRoute, citiesList } from '../../const.ts';
+import { AppRoute } from '../../const.ts';
 import OfferList from '../../components/offer-list/offer-list.tsx';
 import Map from '../../components/map/map.tsx';
 import CityList from '../../components/city-list/city-list.tsx';
 import PlaceSort from '../../components/place-sort/place-sort.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
-import { getCity } from '../../util.ts';
 
 function Main(): JSX.Element {
 
   const activeCity = useAppSelector((state) => state.city);
   const sortOffersByCityName = useAppSelector((state) => state.sortOffersByCityName);
-
-  const city = getCity(sortOffersByCityName);
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
@@ -67,8 +64,7 @@ function Main(): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <CityList
-              cities={ citiesList }
-              currentCity={ activeCity }
+              currentCity={ activeCity.name }
             />
           </section>
         </div>
@@ -76,8 +72,10 @@ function Main(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{ sortOffersByCityName.length } places to stay in { city.name }</b>
-              <PlaceSort />
+              <b className="places__found">{ sortOffersByCityName.length } places to stay in { activeCity.name }</b>
+              <PlaceSort
+                currentCity={ activeCity.name }
+              />
               <OfferList
                 offers={ sortOffersByCityName }
                 type = 'cities'
@@ -87,7 +85,7 @@ function Main(): JSX.Element {
             </section>
             <div className="cities__right-section">
               <Map
-                city={ city }
+                city={ activeCity }
                 points={ sortOffersByCityName }
                 selectedPoint={ selectedPoint }
               />

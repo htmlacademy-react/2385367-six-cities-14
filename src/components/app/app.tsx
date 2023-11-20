@@ -8,6 +8,7 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import OfferPage from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../../pages/main/main';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
 import { Review } from '../../types/review';
 
@@ -19,7 +20,13 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 
 function App({ reviews }: AppProps): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
+  if (isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <HelmetProvider>
       <BrowserRouter>
