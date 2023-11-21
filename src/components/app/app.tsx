@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 import Favorites from '../../pages/favorites/favorites';
@@ -11,8 +11,10 @@ import Main from '../../pages/main/main';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
 import { Review } from '../../types/review';
+import HistoryRouter from '../history-router/history-router.tsx';
+import browserHistory from '../../browser-history';
 
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 
  type AppProps = {
    reviews: Review[];
@@ -21,6 +23,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 function App({ reviews }: AppProps): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (isOffersDataLoading) {
     return (
@@ -29,7 +32,7 @@ function App({ reviews }: AppProps): JSX.Element {
   }
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={ browserHistory }>
         <Routes>
           <Route
             index
@@ -41,7 +44,7 @@ function App({ reviews }: AppProps): JSX.Element {
             path={ AppRoute.Favorites }
             element={
               <PrivateRoute
-                authorizationStatus={ AuthorizationStatus.Auth }
+                authorizationStatus={ isAuthorizationStatus }
                 redirectTo={ AppRoute.Login }
               >
                 <Favorites offers={ offers } />
@@ -50,14 +53,7 @@ function App({ reviews }: AppProps): JSX.Element {
           />
           <Route
             path={ AppRoute.Login }
-            element={
-              <PrivateRoute
-                authorizationStatus={ AuthorizationStatus.Auth }
-                redirectTo={ AppRoute.Main }
-              >
-                <Login />
-              </PrivateRoute>
-            }
+            element={ <Login /> }
           />
           <Route
             path={`${AppRoute.Offer }:id`}
@@ -72,7 +68,7 @@ function App({ reviews }: AppProps): JSX.Element {
             element={ <PageNotFound /> }
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
