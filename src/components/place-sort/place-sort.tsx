@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, usePrevious } from '../../hooks';
 import classNames from 'classnames';
 import { filterOffersByType } from '../../store/action';
 
@@ -12,11 +12,18 @@ const filtersList: FiltersListType = {
   'top' : 'Top rated first',
 };
 
-function PlaceSort() {
+type CurrentCityProps = {
+  currentCity: string;
+}
+
+function PlaceSort({ currentCity }: CurrentCityProps) {
+
   const [active, setActive] = useState(false);
   const [currentFilter, setCurrenFilter] = useState(filtersList.popular);
 
   const dispatch = useAppDispatch();
+
+  const previousCity = usePrevious(currentCity);
 
   const placeSortClass = classNames({
     'places__options': true,
@@ -32,7 +39,7 @@ function PlaceSort() {
         tabIndex={0}
         onClick={() => setActive((prev) => !prev)}
       >
-        {currentFilter}
+        {previousCity === currentCity ? currentFilter : filtersList.popular}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
