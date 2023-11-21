@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 
 import { Offer } from '../../types/offer.ts';
-import { AppRoute } from '../../const.ts';
 import OfferList from '../../components/offer-list/offer-list.tsx';
 import Map from '../../components/map/map.tsx';
 import CityList from '../../components/city-list/city-list.tsx';
