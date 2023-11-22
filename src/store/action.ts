@@ -1,12 +1,9 @@
 import { Offer, City, OfferPageType } from '../types/offer';
+import { Review } from '../types/review';
 import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus, AppRoute } from '../const';
 
 export const changeCity = createAction<City>('list/changeCity');
-
-export const sortOffersByCityName = createAction<City>('offers/sortOffersByCityName');
-
-export const filterOffersByType = createAction<string>('offers/filterOffersByType');
 
 export const loadOffers = createAction<Offer[]>('data/loadOffers');
 
@@ -21,3 +18,9 @@ export const setOfferDataLoadingStatus = createAction<boolean>('data/setOfferDat
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
+
+export const addReview = createAction<Review>('review/addReview');
+
+export const dropSendingStatus = createAction('review/dropSendingStatus');
+
+export const loadReviews = createAction<Review[]>('data/loadReviews');

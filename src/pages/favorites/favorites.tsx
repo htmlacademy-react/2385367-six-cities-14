@@ -1,15 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import OfferList from '../../components/offer-list/offer-list';
 import Header from '../../components/header/header';
-import { Offer } from '../../types/offer';
 import { AppRoute } from '../../const';
 
- type FavoritesProps = {
-   offers: Offer[];
- }
-
-function Favorites({ offers }: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -20,11 +14,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <OfferList
-              offers={ offers }
-              onItemMouseEnter={ () => '' }
-              onItemMouseLeave={ () => '' }
-            />
+
           </section>
         </div>
       </main>
