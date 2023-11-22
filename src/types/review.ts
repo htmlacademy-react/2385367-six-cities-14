@@ -12,3 +12,8 @@ type User = {
   isPro: boolean;
   name: string;
 }
+
+export type ReviewData = {
+  comment: Review['comment'];
+  rating: Review['rating'];
+}

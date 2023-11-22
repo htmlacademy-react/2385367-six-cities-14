@@ -1,18 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, sortOffersByCityName, filterOffersByType, loadOffers, loadOffer, setOffersDataLoadingStatus, setOfferDataLoadingStatus, loadOffersNearby,requireAuthorization } from './action';
+import { changeCity, loadOffers, loadOffer, setOffersDataLoadingStatus,
+  setOfferDataLoadingStatus, loadOffersNearby,
+  requireAuthorization, loadReviews, addReview, dropSendingStatus } from './action';
+import { postReview } from './api-action';
 import { Offer, City, OfferPageType } from '../types/offer';
-import { FilterType, CityMap, AuthorizationStatus } from '../const';
+import { Review } from '../types/review';
+import { CityMap, AuthorizationStatus, RequestStatus } from '../const';
 
  type InitialState = {
    city: City;
    offers: Offer[];
    offersNearby: Offer[];
    currentOffer: OfferPageType | null;
-   sortOffersByCityName: Offer[];
-   filterOffersByType: Offer[];
+   reviews: Review[];
    isOffersDataLoading: boolean;
    isOfferDataLoading: boolean;
    authorizationStatus: AuthorizationStatus;
+   sendingReviewStatus: RequestStatus;
  }
 
 const initialState: InitialState = {
@@ -20,11 +24,11 @@ const initialState: InitialState = {
   offers: [],
   offersNearby: [],
   currentOffer: null,
-  sortOffersByCityName: [],
-  filterOffersByType: [],
+  reviews: [],
   isOffersDataLoading: false,
   isOfferDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
+  sendingReviewStatus: RequestStatus.Unsent
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -47,26 +51,26 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffer, (state, action) => {
       state.currentOffer = action.payload;
     })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(postReview.pending, (state) => {
+      state.sendingReviewStatus = RequestStatus.Pending;
+    })
+    .addCase(postReview.fulfilled, (state) => {
+      state.sendingReviewStatus = RequestStatus.Success;
+    })
+    .addCase(postReview.rejected, (state) => {
+      state.sendingReviewStatus = RequestStatus.Error;
+    })
+    .addCase(dropSendingStatus, (state) => {
+      state.sendingReviewStatus = RequestStatus.Unsent;
+    })
+    .addCase(addReview, (state, action) => {
+      state.reviews.push(action.payload);
+    })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
-    })
-    .addCase(sortOffersByCityName, (state, action) => {
-      state.sortOffersByCityName = state.offers.filter((item) => item.city.name === action.payload.name);
-    })
-    .addCase(filterOffersByType, (state, action) => {
-      switch (action.payload) {
-        case FilterType.High:
-          state.filterOffersByType = state.sortOffersByCityName.sort((a, b) => a.price - b.price);
-          break;
-        case FilterType.Low:
-          state.filterOffersByType = state.sortOffersByCityName.sort((a, b) => b.price - a.price);
-          break;
-        case FilterType.Top:
-          state.filterOffersByType = state.sortOffersByCityName.sort((a, b) => b.rating - a.rating);
-          break;
-        default:
-          state.filterOffersByType = state.sortOffersByCityName.slice();
-      }
     });
 });
 

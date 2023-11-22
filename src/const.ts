@@ -24,17 +24,17 @@ export const months = [
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ] as const;
 
-export enum FilterType {
-   Popular = 'popular',
-   High = 'high',
-   Low = 'low',
-   Top = 'top'
-}
+export const FilterType = {
+  Popular : 'popular',
+  High : 'high',
+  Low : 'low',
+  Top : 'top'
+};
 
 export const enum APIRoute {
   Offers = '/offers',
   Favorite = '/favorite',
-  Coments = '/comments',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout'
 }
@@ -98,3 +98,10 @@ export const CityMap: Record<CityName, City> = {
     }
   },
 } as const;
+
+export const enum RequestStatus {
+  Unsent = 'UNSENT',
+  Pending = 'PENDING',
+  Success = 'SUCCESS',
+  Error = 'ERROR'
+}

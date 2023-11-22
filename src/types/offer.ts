@@ -24,15 +24,17 @@ type Location = {
 
 type OfferDuplicate = Omit <Offer, 'previewImage'>;
 
+export type Host = {
+  isPro: boolean;
+  name: string;
+  avatarUrl: string;
+}
+
 export type OfferPageType = OfferDuplicate & {
         bedrooms: number;
         description: string;
         goods: string[];
-        host: {
-        avatarUrl: string;
-        isPro: boolean;
-        name: string;
-        };
+        host: Host;
         images: string[];
         maxAdults: number;
         };

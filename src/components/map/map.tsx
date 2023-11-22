@@ -11,7 +11,7 @@ import './map.css';
 type MapProps = {
   city: Offer['city'];
   points: Offer[];
-  selectedPoint?: Offer;
+  selectedPoint: string | null;
   pageOffer?: OfferPageType;
 }
 
@@ -42,7 +42,7 @@ function Map({ city, points, selectedPoint, pageOffer}: MapProps): JSX.Element {
         ]);
         marker
           .setIcon(
-            selectedPoint && point.id === selectedPoint.id
+            selectedPoint && point.id === selectedPoint
             || pageOffer && pageOffer.id === point.id
               ? currentCustomIcon : defaultCustomIcon
           )
