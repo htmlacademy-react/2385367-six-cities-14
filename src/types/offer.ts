@@ -1,4 +1,4 @@
-export type Offer = {
+export type Offers = {
   id: string;
   city: City;
   isFavorite: boolean;
@@ -22,7 +22,7 @@ type Location = {
       zoom: number;
       };
 
-type OfferDuplicate = Omit <Offer, 'previewImage'>;
+type OfferDuplicate = Omit <Offers, 'previewImage'>;
 
 export type Host = {
   isPro: boolean;
@@ -30,7 +30,7 @@ export type Host = {
   avatarUrl: string;
 }
 
-export type OfferPageType = OfferDuplicate & {
+export type Offer = OfferDuplicate & {
         bedrooms: number;
         description: string;
         goods: string[];

@@ -1,7 +1,7 @@
-import { OfferPageType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 
  type GalleryOfferProps = {
-   offer: OfferPageType;
+   offer: Offer;
  }
 
 function OfferPicturesGallery({offer}: GalleryOfferProps) {

@@ -3,16 +3,16 @@ import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import useMap from '../../hooks/use-map';
-import { Offer, OfferPageType } from '../../types/offer';
+import { Offers, Offer } from '../../types/offer';
 import { UrlMarker } from '../../const';
 
 import './map.css';
 
 type MapProps = {
-  city: Offer['city'];
-  points: Offer[];
+  city: Offers['city'];
+  points: Offers[];
   selectedPoint: string | null;
-  pageOffer?: OfferPageType;
+  offer?: Offer;
 }
 
 const defaultCustomIcon = new Icon({
@@ -27,7 +27,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({ city, points, selectedPoint, pageOffer}: MapProps): JSX.Element {
+function Map({ city, points, selectedPoint, offer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -43,7 +43,7 @@ function Map({ city, points, selectedPoint, pageOffer}: MapProps): JSX.Element {
         marker
           .setIcon(
             selectedPoint && point.id === selectedPoint
-            || pageOffer && pageOffer.id === point.id
+            || offer && offer.id === point.id
               ? currentCustomIcon : defaultCustomIcon
           )
           .setOpacity(0.75)
@@ -62,7 +62,7 @@ function Map({ city, points, selectedPoint, pageOffer}: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, city, selectedPoint, pageOffer]);
+  }, [map, points, city, selectedPoint, offer]);
 
   return (
     <div

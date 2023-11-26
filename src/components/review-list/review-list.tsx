@@ -1,4 +1,4 @@
-import ReviewCard from '../review/review';
+import ReviewCard from '../review-card/review-card';
 import { Review } from '../../types/review';
 
 const MAX_REVIEWS_QUANTITY = 10;

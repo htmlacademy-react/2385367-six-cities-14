@@ -1,23 +1,23 @@
 import { ChangeEvent, useState, useEffect, FormEvent, Fragment } from 'react';
-import { Offer } from '../../types/offer';
+import { Offers } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-action';
-import { dropSendingStatus } from '../../store/action';
+import { getSendingStatusReview } from '../../store/reviews-data/selectors';
 import { RequestStatus } from '../../const';
 
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
 
 const ratingMap = {
-  '1': 'terribly',
-  '2': 'badly',
-  '3': 'not bad',
-  '4': 'good',
   '5': 'perfect',
+  '4': 'good',
+  '3': 'not bad',
+  '2': 'badly',
+  '1': 'terribly',
 };
 
  type FormCommentProps = {
-   offerId: Offer['id'];
+   offerId: Offers['id'];
  }
 
 function FormComment({offerId}: FormCommentProps): JSX.Element {
@@ -27,7 +27,7 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useAppDispatch();
-  const sendingStatus = useAppSelector((state) => state.sendingReviewStatus);
+  const sendingStatus = useAppSelector(getSendingStatusReview);
 
   const isValid =
      comment.length >= MIN_COMMENT_LENGTH &&
@@ -53,7 +53,6 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
       case RequestStatus.Success:
         setComment('');
         setRating('');
-        dispatch(dropSendingStatus());
         break;
       case RequestStatus.Pending:
         setIsSubmitting(true);
@@ -67,9 +66,9 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
     <form className="reviews__form form" action="#" method="post" onSubmit={ handleFormSubmit }>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       {sendingStatus === RequestStatus.Error &&
-         <p>Комментарий не отправлен</p>}
+         <p><b>Комментарий не отправлен</b></p>}
       <div className="reviews__rating-form form__rating">
-        {Object.entries(ratingMap).map(([score, title]) => (
+        {Object.entries(ratingMap).toReversed().map(([score, title]) => (
           <Fragment key={score}>
             <input
               className="form__rating-input visually-hidden"
