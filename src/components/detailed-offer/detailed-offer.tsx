@@ -1,7 +1,7 @@
-import { OfferPageType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 
  type DetailedOfferProps = {
-   offer: OfferPageType;
+   offer: Offer;
  }
 
 function DetailedOffer({ offer }: DetailedOfferProps): JSX.Element {

@@ -9,11 +9,12 @@ import Header from '../../components/header/header.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import { sorting } from '../../utils/sort.ts';
 import { FilterType } from '../../const.ts';
+import { getOffers, getActiveCity } from '../../store/offers-data/selectors';
 
 function Main(): JSX.Element {
 
-  const activeCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const activeCity = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getOffers);
   const [currentSort, setCurrentSort] = useState(FilterType.Popular);
 
   const sortOffersByCityName = offers

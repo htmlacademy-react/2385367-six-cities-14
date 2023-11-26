@@ -1,10 +1,10 @@
 import OfferCard from '../offer-card/offer-card';
-import { Offer } from '../../types/offer';
+import { Offers } from '../../types/offer';
 import classNames from 'classnames';
 
  type OfferListProps = {
    type?: 'cities' | 'near';
-   offers: Offer[];
+   offers: Offers[];
    onItemMouseEnter: (id: string) => void;
    onItemMouseLeave: () => void;
  }

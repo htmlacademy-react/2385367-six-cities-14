@@ -10,32 +10,42 @@ import Loader from '../../components/loader/loader';
 import Header from '../../components/header/header';
 import OfferPicturesGallery from '../../components/offer-pictures-gallery/offer-pictures-gallery';
 import DetailedOffer from '../../components/detailed-offer/detailed-offer';
-import { AuthorizationStatus } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { fetchOfferAction } from '../../store/api-action';
+import { fetchOfferAction, fetchReviewsAction, fetchOfferNearbyAction } from '../../store/api-action';
+import { AuthorizationStatus, RequestStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
+import { getOffer } from '../../store/offer-data/selectors';
+import { getReviews } from '../../store/reviews-data/selectors';
+import { getNearbyOffers } from '../../store/nearby-data/selectors';
+import { getFetchingStatusOffer } from '../../store/offer-data/selectors';
+
+const MAX_NEAR_PLACES = 3;
+const MAX_MAP_PIN = 3;
 
 
-function OfferPage (): JSX.Element {
+function Offer (): JSX.Element {
 
   const {id: offerId} = useParams();
 
-  const isOfferDataLoading = useAppSelector((state) => state.isOfferDataLoading);
-  const pageOffer = useAppSelector((state) => state.currentOffer);
-  const reviews = useAppSelector((state) => state.reviews);
-  const offersNearby = useAppSelector((state) => state.offersNearby);
-  const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOfferDataLoading = useAppSelector(getFetchingStatusOffer);
+  const offer = useAppSelector(getOffer);
+  const reviews = useAppSelector(getReviews);
+  const offersNearby = useAppSelector(getNearbyOffers);
+  const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (offerId) {
       dispatch(fetchOfferAction(offerId));
+      dispatch(fetchReviewsAction(offerId));
+      dispatch(fetchOfferNearbyAction(offerId));
     }
   }, [dispatch, offerId]);
 
-  const randomNearbyOffers = offersNearby.slice(1, 4);
-  const randomNearbyMap = offersNearby.slice(1, 4);
-  if (pageOffer) {
-    randomNearbyMap.push(pageOffer);
+  const randomNearbyOffers = offersNearby.slice(0, MAX_NEAR_PLACES);
+  const randomNearbyMap = offersNearby.slice(0, MAX_MAP_PIN);
+  if (offer) {
+    randomNearbyMap.push(offer);
   }
 
   const [selectedPoint, setSelectedPoint] = useState<string | null>(
@@ -50,7 +60,7 @@ function OfferPage (): JSX.Element {
   };
 
 
-  if (isOfferDataLoading) {
+  if (isOfferDataLoading === RequestStatus.Pending) {
     return (
       <Loader />
     );
@@ -59,18 +69,18 @@ function OfferPage (): JSX.Element {
   return (
     <div className="page">
       <Helmet>
-        <title>{ `6 cities - ${ pageOffer?.title }` }</title>
+        <title>{ `6 cities - ${ offer?.title }` }</title>
       </Helmet>
       <Header/>
-      {!isOfferDataLoading && pageOffer &&
+      {isOfferDataLoading === RequestStatus.Success && offer &&
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferPicturesGallery offer={ pageOffer } />
+          <OfferPicturesGallery offer={ offer } />
 
           <div className="offer__container container">
             <div className="offer__wrapper">
               <DetailedOffer
-                offer={ pageOffer }
+                offer={ offer }
               />
               <section className="offer__reviews reviews">
                 <ReviewList
@@ -85,10 +95,10 @@ function OfferPage (): JSX.Element {
           </div>
           <section className="offer__map map">
             <Map
-              city={ pageOffer.city }
+              city={ offer.city }
               points={ randomNearbyMap }
               selectedPoint={ selectedPoint }
-              pageOffer = { pageOffer }
+              offer = { offer }
             />
           </section>
         </section>
@@ -108,4 +118,4 @@ function OfferPage (): JSX.Element {
   );
 }
 
-export default OfferPage;
+export default Offer;
