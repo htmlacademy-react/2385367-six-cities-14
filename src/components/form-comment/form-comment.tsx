@@ -1,8 +1,10 @@
 import { ChangeEvent, useState, useEffect, FormEvent, Fragment } from 'react';
+import { toast } from 'react-toastify';
 import { Offers } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-action';
 import { getSendingStatusReview } from '../../store/reviews-data/selectors';
+import { dropSendingStatusReview } from '../../store/reviews-data/reviews-data';
 import { RequestStatus } from '../../const';
 
 const MIN_COMMENT_LENGTH = 50;
@@ -49,24 +51,34 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
   };
 
   useEffect(() => {
-    switch (sendingStatus) {
-      case RequestStatus.Success:
-        setComment('');
-        setRating('');
-        break;
-      case RequestStatus.Pending:
-        setIsSubmitting(true);
-        break;
-      default:
-        setIsSubmitting(false);
+    let isMounted = true;
+
+    if (isMounted) {
+      switch (sendingStatus) {
+        case RequestStatus.Success:
+          setComment('');
+          setRating('');
+          dispatch(dropSendingStatusReview());
+          break;
+        case RequestStatus.Pending:
+          setIsSubmitting(true);
+          break;
+        case RequestStatus.Error:
+          toast.warn('Комментарий не отправлен');
+          setIsSubmitting(false);
+          break;
+        default:
+          setIsSubmitting(false);
+      }
     }
+    return () => {
+      isMounted = false;
+    };
   }, [sendingStatus, dispatch]);
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={ handleFormSubmit }>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      {sendingStatus === RequestStatus.Error &&
-         <p><b>Комментарий не отправлен</b></p>}
       <div className="reviews__rating-form form__rating">
         {Object.entries(ratingMap).toReversed().map(([score, title]) => (
           <Fragment key={score}>

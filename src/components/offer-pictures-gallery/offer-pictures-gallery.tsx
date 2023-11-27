@@ -8,8 +8,8 @@ function OfferPicturesGallery({offer}: GalleryOfferProps) {
   return (
     <div className="offer__gallery-container container">
       <div className="offer__gallery">
-        {offer.images.map((item, i) => {
-          const keyValue = `${item}-${i}`;
+        {offer.images.map((item) => {
+          const keyValue = `${item}`;
           return (
             <div className="offer__image-wrapper" key={keyValue}>
               <img className="offer__image" src={item} alt="Photo studio" />

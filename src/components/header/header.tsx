@@ -2,10 +2,13 @@ import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { logoutAction } from '../../store/api-action';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { getAuthorizationStatus } from '../../store/user-data/selectors';
+import { getAuthorizationStatus, getUser } from '../../store/user-data/selectors';
+import { getFavorites } from '../../store/favorites-data/selectors';
 
 function Header() {
   const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
+  const favorites = useAppSelector(getFavorites);
 
   const dispatch = useAppDispatch();
 
@@ -31,8 +34,8 @@ function Header() {
                     >
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__user-name user__name">{ user?.email }</span>
+                      <span className="header__favorite-count">{ favorites.length }</span>
                     </Link>
                   </li>
 
