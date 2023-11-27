@@ -4,14 +4,14 @@ import { useParams } from 'react-router-dom';
 
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
-import OfferList from '../../components/offer-list/offer-list';
+import { OfferListMemo as OfferList } from '../../components/offer-list/offer-list';
 import FormComment from '../../components/form-comment/form-comment';
 import Loader from '../../components/loader/loader';
 import Header from '../../components/header/header';
 import OfferPicturesGallery from '../../components/offer-pictures-gallery/offer-pictures-gallery';
 import DetailedOffer from '../../components/detailed-offer/detailed-offer';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { fetchOfferAction, fetchReviewsAction, fetchOfferNearbyAction } from '../../store/api-action';
+import { fetchOfferAction, fetchReviewsAction, fetchOfferNearbyAction, fetchFavoritesAction } from '../../store/api-action';
 import { AuthorizationStatus, RequestStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
 import { getOffer } from '../../store/offer-data/selectors';
@@ -39,6 +39,7 @@ function Offer (): JSX.Element {
       dispatch(fetchOfferAction(offerId));
       dispatch(fetchReviewsAction(offerId));
       dispatch(fetchOfferNearbyAction(offerId));
+      dispatch(fetchFavoritesAction());
     }
   }, [dispatch, offerId]);
 

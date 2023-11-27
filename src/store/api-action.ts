@@ -7,7 +7,8 @@ import { AuthorizedUser } from '../types/user-data';
 import { Review, ReviewData } from '../types/review';
 import { dropToken, saveToken } from '../services/token';
 import { redirectToRoute } from './action';
-import { APIRoute, AppRoute, NameSpace } from '../const';
+import { APIRoute, AppRoute, NameSpace, FavoriteStatus } from '../const';
+
 
 export const fetchOffersAction = createAsyncThunk<Offers[], undefined, {
    dispatch: AppDispatch;
@@ -97,10 +98,9 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   `${NameSpace.User}/logout`,
-  async(_arg, {dispatch, extra: api}) => {
+  async(_arg, { extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(redirectToRoute(AppRoute.Login));
   }
 );
 
@@ -112,6 +112,45 @@ export const postReview = createAsyncThunk<Review, {reviewData: ReviewData; offe
   `${NameSpace.Reviews}/postReview`,
   async ({reviewData, offerId}, {extra: api}) => {
     const { data } = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, reviewData);
+
+    return data;
+  }
+);
+
+export const fetchFavoritesAction = createAsyncThunk<Offers[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Favorites}/fetchFavorites`,
+  async (_arg, {extra: api}) => {
+    const { data } = await api.get<Offers[]>(APIRoute.Favorite);
+
+    return data;
+  }
+);
+
+export const addFavorite = createAsyncThunk<Offers, Offers['id'], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Favorites}/addFavorite`,
+  async (id, {extra: api}) => {
+    const { data } = await api.post<Offers>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Add}`);
+
+    return data;
+  }
+);
+
+export const deleteFavorite = createAsyncThunk<Offers, Offers['id'], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Favorites}/deleteFavorite`,
+  async (id, {extra: api}) => {
+    const { data } = await api.post<Offers>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Delete}`);
 
     return data;
   }

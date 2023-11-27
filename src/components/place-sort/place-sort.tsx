@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import classNames from 'classnames';
 
 type FiltersListType = Record<string, string>;
@@ -64,4 +64,4 @@ function PlaceSort({onChange}: PlaceSortProps) {
   );
 }
 
-export default PlaceSort;
+export const PlaceSortMemo = memo(PlaceSort);

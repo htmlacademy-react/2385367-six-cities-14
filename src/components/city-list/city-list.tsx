@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import classNames from 'classnames';
@@ -12,30 +13,37 @@ function CityList({ currentCity }: CityListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <ul className="locations__list tabs__list">
-      {Object.values(CityMap).map((city, i) => {
-        const keyValue = `${city.name}-${i}`;
-        return (
-          <li className="locations__item" key={keyValue}>
-            <Link to={ '#' }
-              className={classNames({
-                'locations__item-link': true,
-                'tabs__item': true,
-                'tabs__item--active': currentCity === city.name
-              })}
-
-              onClick={(evt) => {
-                evt.preventDefault();
-                dispatch(setActiveCity(city));
-              }}
-            >
-              <span>{city.name}</span>
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <h1 className="visually-hidden">Cities</h1>
+      <div className="tabs">
+        <section className="locations container">
+          <ul className="locations__list tabs__list">
+            {Object.values(CityMap).map((city, i) => {
+              const keyValue = `${city.name}-${i}`;
+              return (
+                <li className="locations__item" key={keyValue}>
+                  <Link
+                    className={classNames({
+                      'locations__item-link': true,
+                      'tabs__item': true,
+                      'tabs__item--active': currentCity === city.name
+                    })}
+                    to="#"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      dispatch(setActiveCity(city));
+                    }}
+                  >
+                    <span>{city.name}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      </div>
+    </>
   );
 }
 
-export default CityList;
+export const CityListMemo = memo(CityList);

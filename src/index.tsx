@@ -6,9 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import App from './components/app/app';
 import { store } from './store';
-import { fetchOffersAction, checkAuthAction } from './store/api-action';
+import { checkAuthAction } from './store/api-action';
 
-store.dispatch(fetchOffersAction());
+
 store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(

@@ -32,6 +32,11 @@ export type NearbyData = {
    fetchingStatusNearby: RequestStatus;
  }
 
+export type FavoritesData = {
+  favorites: Offers[];
+  fetchingStatusFavorites: RequestStatus;
+}
+
 export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;

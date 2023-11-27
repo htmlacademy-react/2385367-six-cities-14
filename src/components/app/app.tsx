@@ -8,24 +8,16 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import Offer from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../../pages/main/main';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-router/history-router.tsx';
 import browserHistory from '../../browser-history';
-import { getFetchingStatusOffers } from '../../store/offers-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
-import { AppRoute, RequestStatus } from '../../const';
+import { AppRoute } from '../../const';
 
 function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector(getFetchingStatusOffers);
   const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  if (isOffersDataLoading === RequestStatus.Pending) {
-    return (
-      <LoadingScreen />
-    );
-  }
   return (
     <HelmetProvider>
       <HistoryRouter history={ browserHistory }>
