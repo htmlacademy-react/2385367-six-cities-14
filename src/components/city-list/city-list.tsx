@@ -18,8 +18,8 @@ function CityList({ currentCity }: CityListProps): JSX.Element {
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {Object.values(CityMap).map((city, i) => {
-              const keyValue = `${city.name}-${i}`;
+            {Object.values(CityMap).map((city) => {
+              const keyValue = `${city.name}`;
               return (
                 <li className="locations__item" key={keyValue}>
                   <Link

@@ -28,13 +28,14 @@ function Cities({offers, activeCity}: CitiesProps) {
     setCurrentSort(newSort);
   }, []);
 
-  const handleItemMouseEnter = (id: string) => {
+  const handleItemMouseEnter = useCallback((id: string) => {
     const currentPoint = sortOffersByCityName.slice().filter((item) => item.id === id);
     setSelectedPoint(currentPoint[0].id);
-  };
-  const handleItemMouseLeave = () => {
+  }, [sortOffersByCityName]);
+
+  const handleItemMouseLeave = useCallback(() => {
     setSelectedPoint(null);
-  };
+  }, []);
 
   return (
     <div className="cities">
