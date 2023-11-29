@@ -17,14 +17,14 @@ type MapProps = {
 
 const defaultCustomIcon = new Icon({
   iconUrl: UrlMarker.DefaultMarker,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconSize: [27, 39],
+  iconAnchor: [-13, -39]
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: UrlMarker.CurrentMarker,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconSize: [27, 39],
+  iconAnchor: [-13, -39]
 });
 
 function Map({ city, points, selectedPoint, offer}: MapProps): JSX.Element {

@@ -9,9 +9,9 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 
 function PrivateRoute({ authorizationStatus, children, redirectTo }: PrivateRouteProps): JSX.Element {
   return (
-    authorizationStatus === AuthorizationStatus.Auth
-      ? children
-      : <Navigate to={ redirectTo } />
+    authorizationStatus === AuthorizationStatus.NoAuth
+      ? <Navigate to={ redirectTo } />
+      : children
   );
 }
 

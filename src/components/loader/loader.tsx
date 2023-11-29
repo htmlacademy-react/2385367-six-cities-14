@@ -1,6 +1,10 @@
+import './loader.css';
+
 function Loader() {
   return (
-    <p>Loading...</p>
+    <div className="loader">
+      <p>Loading...</p>
+    </div>
   );
 }
 

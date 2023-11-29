@@ -45,16 +45,13 @@ function Favorites(): JSX.Element {
   }
 
   return (
-    <div className="page">
+    <div className={classNames('page', {['page--favorites-empty']: isEmpty})}>
       <Helmet>
         <title>{ '6 cities - Favorites' }</title>
       </Helmet>
       <Header/>
       <main
-        className={classNames({
-          'page__main page__main--favorites': true,
-          'page__main--favorites-empty': isEmpty
-        })}
+        className={classNames('page__main', 'page__main--favorites', {['page__main--favorites-empty']: isEmpty})}
       >
         {isEmpty ?
           <FavoritesOffersEmpty /> :

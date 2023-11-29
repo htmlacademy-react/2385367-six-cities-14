@@ -10,9 +10,11 @@ import { Offers } from '../../types/offer';
    id: Offers['id'];
    isFavorite: Offers['isFavorite'];
    onBookmarkClick: () => void;
+   type: string;
+   large?: boolean;
  }
 
-function Bookmark({ id, isFavorite, onBookmarkClick }: BookmarkProps) {
+function Bookmark({ id, isFavorite, onBookmarkClick, type, large = false }: BookmarkProps) {
   const navigateTo = useNavigate();
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -35,12 +37,13 @@ function Bookmark({ id, isFavorite, onBookmarkClick }: BookmarkProps) {
     <button
       type="button"
       onClick={ handleBookmarkClick }
-      className={ classNames({
-        'place-card__bookmark-button button': true,
-        'place-card__bookmark-button--active': isFavorite
-      })}
+      className={ classNames(`${type}__bookmark-button`, 'button', {[`${type}__bookmark-button--active`]: isFavorite && authorizationStatus === AuthorizationStatus.Auth}
+      )}
     >
-      <svg className="place-card__bookmark-icon" width="18" height="19">
+      <svg className={classNames(`${type}__bookmark-icon`)}
+        width={large ? '31' : '18'}
+        height={large ? '33' : '19'}
+      >
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
       <span className="visually-hidden">To bookmarks</span>
