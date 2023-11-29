@@ -5,10 +5,10 @@ function ReviewCard({ date, user, comment, rating }: Review): JSX.Element {
   const formatDate = (dateString: string): string => {
 
     const currentDate = new Date(dateString);
-    const day = currentDate.getDate();
     const month = months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
 
-    return `${day < 10 ? '0' : ''}${day} ${month}`;
+    return `${month} ${year}`;
   };
 
   return (

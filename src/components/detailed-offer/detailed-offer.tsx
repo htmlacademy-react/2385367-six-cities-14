@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Bookmark from '../bookmark/bookmark';
 import { Offer } from '../../types/offer';
+import classNames from 'classnames';
+import { capitalizedString } from '../../utils/utils';
 
  type DetailedOfferProps = {
    offer: Offer;
@@ -24,6 +26,8 @@ function DetailedOffer({ offer }: DetailedOfferProps): JSX.Element {
           id={offer.id}
           isFavorite={activeFavorite}
           onBookmarkClick={() => setActiveFavorite((prev) => !prev)}
+          type='offer'
+          large
         />
       </div>
       <div className="offer__rating rating">
@@ -31,14 +35,18 @@ function DetailedOffer({ offer }: DetailedOfferProps): JSX.Element {
           <span style={{width: `${Math.round(offer.rating) * 100 / 5}%`}}></span>
           <span className="visually-hidden">Rating</span>
         </div>
-        <span className="offer__rating-value rating__value">{Math.round(offer.rating)}</span>
+        <span className="offer__rating-value rating__value">{offer.rating}</span>
       </div>
       <ul className="offer__features">
         <li className="offer__feature offer__feature--entire">
-          {offer.type}
+          {capitalizedString(offer.type)}
         </li>
-        <li className="offer__feature offer__feature--bedrooms">{offer.bedrooms} Bedrooms</li>
-        <li className="offer__feature offer__feature--adults">Max {offer.maxAdults} adults</li>
+        <li className="offer__feature offer__feature--bedrooms">
+          {offer.bedrooms} Bedroom{offer.bedrooms > 1 && 's'}
+        </li>
+        <li className="offer__feature offer__feature--adults">
+           Max {offer.maxAdults} adult{offer.maxAdults > 1 && 's'}
+        </li>
       </ul>
       <div className="offer__price">
         <b className="offer__price-value">&euro;{offer.price}</b>
@@ -58,7 +66,7 @@ function DetailedOffer({ offer }: DetailedOfferProps): JSX.Element {
       <div className="offer__host">
         <h2 className="offer__host-title">Meet the host</h2>
         <div className="offer__host-user user">
-          <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+          <div className={classNames('offer__avatar-wrapper', {['offer__avatar-wrapper--pro']: offer.host.isPro}, 'user__avatar-wrapper')}>
             <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
           </div>
           <span className="offer__user-name">{offer.host.name}</span>

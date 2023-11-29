@@ -18,8 +18,9 @@ function Main(): JSX.Element {
   const activeCity = useAppSelector(getActiveCity);
   const isOffersDataLoading = useAppSelector(getFetchingStatusOffers);
   const offers = useAppSelector(getOffers);
+  const isEmptyOffersListByCity = offers.map((offer) => offer.city.name).includes(activeCity.name);
+  const isEmpty = offers.length === 0 || !isEmptyOffersListByCity;
 
-  const isEmpty = offers.length === 0;
   const dispatch = useAppDispatch();
 
   useEffect(() => {

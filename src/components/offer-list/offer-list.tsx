@@ -28,6 +28,7 @@ function OfferList({ offers, type, onItemMouseEnter, onItemMouseLeave }: OfferLi
           { ...offer }
           onCardMouseEnter={ () => onItemMouseEnter(offer.id) }
           onCardMouseLeave={ onItemMouseLeave }
+          offerCardType={type}
         />)
       )}
     </div>

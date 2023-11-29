@@ -8,7 +8,6 @@ import App from './components/app/app';
 import { store } from './store';
 import { checkAuthAction } from './store/api-action';
 
-
 store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(

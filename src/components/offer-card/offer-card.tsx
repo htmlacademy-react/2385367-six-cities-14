@@ -4,24 +4,27 @@ import { Offers } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Bookmark from '../bookmark/bookmark';
+import { capitalizedString } from '../../utils/utils';
 import './offer-card.css';
 
  type OfferCardProps = Offers & {
   onCardMouseEnter?: () => void;
   onCardMouseLeave?: () => void;
   favorite?: boolean;
+  offerCardType?: 'cities' | 'near';
  };
 
 function OfferCard(props: OfferCardProps): JSX.Element {
-  const {id, title, type, price, isFavorite, previewImage, isPremium, rating, onCardMouseEnter, onCardMouseLeave, favorite = false} = props;
+  const {id, title, type, price, isFavorite, previewImage, isPremium, rating, onCardMouseEnter, onCardMouseLeave, favorite = false, offerCardType} = props;
   const [activeFavorite, setActiveFavorite] = useState(isFavorite);
 
   return (
     <article
       className={classNames({
         'place-card': true,
-        'cities__card': !favorite,
-        'favorites__card': favorite
+        'cities__card': !favorite && offerCardType === 'cities',
+        'favorites__card': favorite,
+        'near-places__card': offerCardType === 'near',
       })}
       onMouseEnter={ onCardMouseEnter }
       onMouseLeave={ onCardMouseLeave }
@@ -50,6 +53,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
             id={id}
             isFavorite={activeFavorite}
             onBookmarkClick={() => setActiveFavorite((prev) => !prev)}
+            type='place-card'
           />
         </div>
         <div className="place-card__rating rating">
@@ -61,7 +65,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}${id}`}>{ title }</Link>
         </h2>
-        <p className="place-card__type">{ type }</p>
+        <p className="place-card__type">{ capitalizedString(type) }</p>
       </div>
     </article>
   );
