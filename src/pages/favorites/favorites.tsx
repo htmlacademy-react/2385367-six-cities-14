@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import Header from '../../components/header/header';
 import { AppRoute, AuthorizationStatus, RequestStatus } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-
 import { getFavorites } from '../../store/favorites-data/selectors';
 import { getFetchingStatusFavorites } from '../../store/favorites-data/selectors';
 import Loader from '../../components/loader/loader';
