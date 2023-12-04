@@ -4,9 +4,8 @@ import { useEffect } from 'react';
 import classNames from 'classnames';
 
 import Header from '../../components/header/header';
-import { AppRoute, RequestStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, RequestStatus } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-
 import { getFavorites } from '../../store/favorites-data/selectors';
 import { getFetchingStatusFavorites } from '../../store/favorites-data/selectors';
 import Loader from '../../components/loader/loader';
@@ -14,6 +13,7 @@ import FavoritesOffers from '../../components/favorites-offers/favorites-offers'
 import FavoritesOffersEmpty from '../../components/favorites-offers-empty/favorites-offers-empty';
 import { fetchFavoritesAction } from '../../store/api-action';
 import { Offers } from '../../types/offer';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
 const getFavoritesByCity = (favorites: Offers[]) => favorites.reduce<{[key: string]: Offers[]}>((acc, current) => {
   const city = current.city.name;
@@ -31,12 +31,15 @@ function Favorites(): JSX.Element {
   const favorites = useAppSelector(getFavorites);
   const fetchingStatus = useAppSelector(getFetchingStatusFavorites);
   const favoriteByCity = getFavoritesByCity(favorites);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isEmpty = favorites.length === 0;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchFavoritesAction());
-  }, [dispatch]);
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesAction());
+    }
+  }, [dispatch, authorizationStatus]);
 
   if (fetchingStatus === RequestStatus.Pending) {
     return (

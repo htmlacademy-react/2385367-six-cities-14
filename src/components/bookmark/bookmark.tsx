@@ -22,15 +22,14 @@ function Bookmark({ id, isFavorite, onBookmarkClick, type, large = false }: Book
   const handleBookmarkClick = () => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       navigateTo(AppRoute.Login);
-    }
-
-    onBookmarkClick();
-
-    if (isFavorite) {
-      dispatch(deleteFavorite(id));
     } else {
-      dispatch(addFavorite(id));
+      if (isFavorite) {
+        dispatch(deleteFavorite(id));
+      } else {
+        dispatch(addFavorite(id));
+      }
     }
+    onBookmarkClick();
   };
 
   return (

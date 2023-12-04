@@ -31,7 +31,7 @@ function Offer (): JSX.Element {
   const offer = useAppSelector(getOffer);
   const reviews = useAppSelector(getReviews);
   const offersNearby = useAppSelector(getNearbyOffers);
-  const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -39,9 +39,11 @@ function Offer (): JSX.Element {
       dispatch(fetchOfferAction(offerId));
       dispatch(fetchReviewsAction(offerId));
       dispatch(fetchOfferNearbyAction(offerId));
-      dispatch(fetchFavoritesAction());
+      if (authorizationStatus === AuthorizationStatus.Auth) {
+        dispatch(fetchFavoritesAction());
+      }
     }
-  }, [dispatch, offerId]);
+  }, [dispatch, offerId, authorizationStatus]);
 
   const randomNearbyOffers = offersNearby.slice(0, MAX_NEAR_PLACES);
   const randomNearbyMap = offersNearby.slice(0, MAX_MAP_PIN);
@@ -87,7 +89,7 @@ function Offer (): JSX.Element {
                 <ReviewList
                   reviews={reviews}
                 />
-                {isAuthorizationStatus === AuthorizationStatus.Auth &&
+                {authorizationStatus === AuthorizationStatus.Auth &&
               <FormComment
                 offerId={offerId as string}
               />}

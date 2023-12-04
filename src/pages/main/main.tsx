@@ -10,13 +10,15 @@ import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoritesAction, fetchOffersAction } from '../../store/api-action';
 import { getFetchingStatusOffers } from '../../store/offers-data/selectors';
-import { RequestStatus} from '../../const';
+import { AuthorizationStatus, RequestStatus} from '../../const';
 import Loader from '../../components/loader/loader';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
 function Main(): JSX.Element {
-
   const activeCity = useAppSelector(getActiveCity);
   const isOffersDataLoading = useAppSelector(getFetchingStatusOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const offers = useAppSelector(getOffers);
   const isEmptyOffersListByCity = offers.map((offer) => offer.city.name).includes(activeCity.name);
   const isEmpty = offers.length === 0 || !isEmptyOffersListByCity;
@@ -25,8 +27,11 @@ function Main(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOffersAction());
-    dispatch(fetchFavoritesAction());
-  }, [dispatch]);
+
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesAction());
+    }
+  }, [authorizationStatus, dispatch]);
 
   if (isOffersDataLoading === RequestStatus.Pending) {
     return (
