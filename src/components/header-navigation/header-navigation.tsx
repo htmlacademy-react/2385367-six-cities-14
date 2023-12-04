@@ -6,7 +6,7 @@ import { getAuthorizationStatus, getUser } from '../../store/user-data/selectors
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 function HeaderNavigation() {
-  const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
   const favorites = useAppSelector(getFavorites);
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ function HeaderNavigation() {
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
-        {isAuthorizationStatus === AuthorizationStatus.Auth
+        {authorizationStatus === AuthorizationStatus.Auth
           ?
           <>
             <li className="header__nav-item user">

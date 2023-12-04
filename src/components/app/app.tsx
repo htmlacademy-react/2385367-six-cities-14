@@ -16,7 +16,7 @@ import { getAuthorizationStatus } from '../../store/user-data/selectors';
 import { AppRoute } from '../../const';
 
 function App(): JSX.Element {
-  const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <HelmetProvider>
@@ -32,7 +32,7 @@ function App(): JSX.Element {
             path={ AppRoute.Favorites }
             element={
               <PrivateRoute
-                authorizationStatus={ isAuthorizationStatus }
+                authorizationStatus={ authorizationStatus }
                 redirectTo={ AppRoute.Login }
               >
                 <Favorites />

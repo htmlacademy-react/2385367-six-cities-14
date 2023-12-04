@@ -45,23 +45,27 @@ function LoginForm() {
         onSubmit={handleSubmit}
       >
         <div className="login__input-wrapper form__input-wrapper">
-          <label className="visually-hidden">E-mail</label>
+          <label htmlFor='email' className="visually-hidden">E-mail</label>
           <input
             ref={loginRef}
             className="login__input form__input"
             type="text"
             name="email"
+            id='email'
             placeholder="Email"
+            autoComplete='email'
           />
         </div>
         <div className="login__input-wrapper form__input-wrapper">
-          <label className="visually-hidden">Password</label>
+          <label htmlFor='password' className="visually-hidden">Password</label>
           <input
             ref={passwordRef}
             className="login__input form__input"
             type="password"
             name="password"
+            id='password'
             placeholder="Password"
+            autoComplete='current-password'
           />
         </div>
         <button className="login__submit form__submit button" type="submit">Sign in</button>
