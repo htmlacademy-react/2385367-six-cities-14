@@ -6,8 +6,8 @@ import classNames from 'classnames';
  type OfferListProps = {
    type?: 'cities' | 'near';
    offers: Offers[];
-   onItemMouseEnter: (id: string) => void;
-   onItemMouseLeave: () => void;
+   onItemMouseEnter?: (id: string) => void;
+   onItemMouseLeave?: () => void;
  }
 
 
@@ -26,7 +26,7 @@ function OfferList({ offers, type, onItemMouseEnter, onItemMouseLeave }: OfferLi
         <OfferCard
           key={ offer.id }
           { ...offer }
-          onCardMouseEnter={ () => onItemMouseEnter(offer.id) }
+          onCardMouseEnter={ () => onItemMouseEnter?.(offer.id) }
           onCardMouseLeave={ onItemMouseLeave }
           offerCardType={type}
         />)

@@ -11,7 +11,7 @@ import './map.css';
 type MapProps = {
   city: Offers['city'];
   points: Offers[];
-  selectedPoint: string | null;
+  selectedPoint?: string | null;
   offer?: Offer;
 }
 
@@ -57,6 +57,12 @@ function Map({ city, points, selectedPoint, offer}: MapProps): JSX.Element {
         ],
         city.location.zoom
       );
+
+      if (offer) {
+        map.doubleClickZoom.disable();
+        map.dragging.disable();
+        map.scrollWheelZoom.disable();
+      }
 
       return () => {
         map.removeLayer(markerLayer);
