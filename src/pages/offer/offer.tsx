@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
@@ -51,18 +51,6 @@ function Offer (): JSX.Element {
     randomNearbyMap.push(offer);
   }
 
-  const [selectedPoint, setSelectedPoint] = useState<string | null>(
-    null
-  );
-  const handleItemMouseEnter = (id: string) => {
-    const currentPoint = randomNearbyOffers.slice().filter((item) => item.id === id);
-    setSelectedPoint(currentPoint[0].id);
-  };
-  const handleItemMouseLeave = () => {
-    setSelectedPoint(null);
-  };
-
-
   if (isOfferDataLoading === RequestStatus.Pending) {
     return (
       <Loader />
@@ -100,7 +88,6 @@ function Offer (): JSX.Element {
             <Map
               city={ offer.city }
               points={ randomNearbyMap }
-              selectedPoint={ selectedPoint }
               offer = { offer }
             />
           </section>
@@ -111,8 +98,6 @@ function Offer (): JSX.Element {
             <OfferList
               type = 'near'
               offers={ randomNearbyOffers }
-              onItemMouseEnter={ handleItemMouseEnter }
-              onItemMouseLeave={ handleItemMouseLeave }
             />
           </section>
         </div>
